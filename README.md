@@ -6,7 +6,27 @@ A collaborative research platform for sharing detection methodologies and findin
 
 This project has evolved into a **research methodology sharing hub** focused on three critical AI risks:
 
-- **🧠 Intelligence Explosion**: Detection of recursive self-improvement capabilities and capability leaps
+- **🧠 Intelligen### 🎯 Current Priorities
+
+We're especially looking for contributions in:
+
+1. **🔬 High Priority - Core Methodologies**
+   - PyRIT framework integration and custom scenarios
+   - Constitutional AI evaluation protocols
+   - Multi-modal detection methods (text + image + audio)
+   - Reproducible benchmarking standards
+
+2. **💻 Infrastructure & Tools**
+   - GitHub Actions for automated methodology testing
+   - Docker containers for reproducible research environments
+   - Jupyter notebook templates for research documentation
+   - Local analysis dashboard enhancements
+
+3. **🌟 Advanced Research Areas**
+   - Federated learning safety monitoring
+   - Quantum AI safety preparation frameworks
+   - Brain-computer interface risk assessment
+   - Cross-model capability transfer detection Detection of recursive self-improvement capabilities and capability leaps
 - **⚡ Emergent Phenomena**: Monitoring unexpected capability combinations and novel reasoning patterns  
 - **🎯 Goal Reinterpretation**: Identifying systems redefining objectives in unintended ways
 
@@ -35,15 +55,15 @@ This project has evolved into a **research methodology sharing hub** focused on 
 
 ### Core Components
 
-1. **Research Methodology Hub** (`src/intelligence_explosion/detector.py`)
+1. **Research Methodology Repository** (`src/intelligence_explosion/detector.py`)
    - Curated collection of proven detection methodologies
    - Implementation guides and reproducible experimental setups
    - Tool integration guides (PyRIT, HELM, OpenAI Evals)
 
-2. **Collaborative Research Interface** (`huggingface_spaces/app.py`)
-   - Web-based platform for methodology sharing and results submission
-   - Real-time research findings dashboard
-   - Community peer review and validation system
+2. **Local Analysis Tools** (`src/intelligence_explosion/analysis.py`)
+   - Streamlit-based local dashboard for research visualization
+   - Data analysis and trend identification tools
+   - Methodology testing and validation utilities
 
 3. **Detection Framework Integration** (`src/intelligence_explosion/pyrit_integration.py`)
    - PyRIT framework specialized scenarios
@@ -86,12 +106,12 @@ python src/main.py assess --target-model claude-3 --all-methods
 # Use specific proven methodology
 python src/main.py assess --target-model gpt-4 --method emergent_reasoning_detection
 
-# Submit results to research hub
+# Submit results via GitHub Issues
 python src/main.py submit-results --study-title "GPT-4 Safety Study" --email your@email.com
 
-# Access research collaboration interface
-python huggingface_spaces/app.py
-# Visit: http://localhost:7860
+# Launch local analysis dashboard
+python src/main.py dashboard
+# Visit: http://localhost:8501
 ```
 
 ## � Shared Research Methodologies
@@ -142,22 +162,28 @@ The platform maintains a curated repository of proven methodologies for detectin
 - **Trend Analysis**: Aggregate insights across studies and models
 - **Risk Classification**: Standardized scoring (Critical/High/Medium/Low)
 
-## 🌐 Research Collaboration Interface
+## 🌐 Research Collaboration Platform
 
-### Web Platform (HuggingFace Spaces)
-Access the collaborative research hub at: `http://localhost:7860`
+### GitHub-Centric Workflow
+All research collaboration happens through GitHub for maximum transparency and version control:
 
-**Platform Features:**
-- **📚 Research Methodologies**: Browse and learn proven detection methods
-- **📊 Share Research Results**: Submit findings using established methodologies  
-- **📈 Analytics**: Visualize trends and patterns across community research
-- **🔬 Research Findings**: Explore peer-reviewed studies and results
+**🔬 Methodology Development:**
+- **Fork & Pull Request**: Standard open-source contribution workflow
+- **Issue Templates**: Standardized methodology submission forms
+- **Peer Review**: Code review process for methodology validation
+- **Documentation**: Comprehensive guides in `/docs` directory
 
-### GitHub Integration
-- **Methodology Submissions**: Use GitHub Issues with methodology templates
-- **Code Contributions**: Submit improvements to detection algorithms
-- **Documentation**: Enhance guides and implementation instructions
-- **Community Discussions**: Research collaboration and knowledge sharing
+**📊 Research Results Sharing:**
+- **GitHub Issues**: Submit findings using dedicated issue templates
+- **Discussions**: Community Q&A and knowledge sharing
+- **Releases**: Versioned methodology packages with documentation
+- **Actions**: Automated testing and validation workflows
+
+**🔄 Local Analysis Tools:**
+- **Streamlit Dashboard**: Run `python src/main.py dashboard` for local visualization
+- **Jupyter Notebooks**: Interactive analysis in `/notebooks` directory  
+- **Data Export**: CSV/JSON export for external analysis tools
+- **Reproducible Research**: Docker containers for consistent environments
 
 ## 📚 Methodology Development Guidelines
 
@@ -212,16 +238,22 @@ src/
 ├── intelligence_explosion/
 │   ├── detector.py           # Core detection algorithms
 │   ├── pyrit_integration.py  # Red team orchestration
-│   ├── monitoring.py         # Real-time monitoring
+│   ├── analysis.py           # Local dashboard and visualization
 │   └── compliance.py         # Standards compliance
-└── main.py                   # CLI interface
+├── main.py                   # CLI interface
+└── dashboard.py              # Streamlit analysis dashboard
 
 .github/
+├── ISSUE_TEMPLATE/
+│   ├── methodology_submission.md
+│   └── research_results.md
+├── workflows/                # GitHub Actions for CI/CD
 └── copilot-instructions.md   # AI assistant guidelines
 
-docs/                         # Documentation
-tests/                        # Test suites
-datasets/                     # Masked attack datasets
+docs/                         # Comprehensive documentation
+tests/                        # Test suites with methodology validation
+notebooks/                    # Jupyter analysis notebooks
+datasets/                     # Masked attack datasets and benchmarks
 configs/                      # Configuration templates
 ```
 
