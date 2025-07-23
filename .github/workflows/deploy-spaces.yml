@@ -1,0 +1,118 @@
+name: 🚀 Deploy to HuggingFace Spaces
+
+on:
+  push:
+    branches: [main]
+    paths: ['huggingface_spaces/**']
+  workflow_dispatch:
+
+jobs:
+  deploy-to-spaces:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+          
+      - name: Install dependencies
+        run: |
+          pip install huggingface_hub
+          
+      - name: Deploy to HuggingFace Spaces
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          python scripts/deploy_to_spaces.py
+          
+  test-leaderboard:
+    runs-on: ubuntu-latest
+    needs: deploy-to-spaces
+    
+    steps:
+      - name: Test Space Endpoint
+        run: |
+          # Wait for deployment
+          sleep 60
+          
+          # Test API endpoint
+          curl -f "https://ai-intelligence-explosion-redteam-safety-leaderboard.hf.space/api/predict" || exit 1
+          
+          echo "✅ Leaderboard deployed successfully!"
+          
+  notify-community:
+    runs-on: ubuntu-latest
+    needs: [deploy-to-spaces, test-leaderboard]
+    if: success()
+    
+    steps:
+      - name: Create deployment announcement
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🚀 Safety Leaderboard Updated - ${new Date().toLocaleDateString()}`,
+              body: `# 🛡️ Safety Leaderboard Deployment Complete!\n\n` +
+                    `The AI Intelligence Explosion Safety Leaderboard has been updated and deployed.\n\n` +
+                    `## 🔗 Access Points\n` +
+                    `- **Live Leaderboard**: https://huggingface.co/spaces/ai-intelligence-explosion-redteam/safety-leaderboard\n` +
+                    `- **API Endpoint**: https://ai-intelligence-explosion-redteam-safety-leaderboard.hf.space/api\n` +
+                    `- **Direct Link**: https://ai-intelligence-explosion-redteam-safety-leaderboard.hf.space\n\n` +
+                    `## 📊 Features\n` +
+                    `- Real-time model safety rankings\n` +
+                    `- Interactive submission interface\n` +
+                    `- Comprehensive analytics dashboard\n` +
+                    `- Multi-language support (English, Korean)\n` +
+                    `- EU AI Act & NIST RMF compliance tracking\n\n` +
+                    `## 🤝 How to Submit Your Model\n` +
+                    `1. Run safety assessment using our framework\n` +
+                    `2. Add safety scores to your model card\n` +
+                    `3. Submit via the web interface\n` +
+                    `4. Wait for community verification\n\n` +
+                    `## 📚 Resources\n` +
+                    `- [Model Card Template](./docs/MODEL_CARD_TEMPLATE.md)\n` +
+                    `- [Submission Guide](./docs/LEADERBOARD_SUBMISSION.md)\n` +
+                    `- [API Documentation](./docs/LEADERBOARD_API.md)\n\n` +
+                    `**Join the global AI safety leaderboard! 🌍🛡️**`,
+              labels: ['announcement', 'leaderboard', 'deployment']
+            });
+            
+      - name: Post to Discussions
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // Create discussion post about new deployment
+            const discussion = await github.graphql(`
+              mutation CreateDiscussion($repositoryId: ID!, $categoryId: ID!, $body: String!, $title: String!) {
+                createDiscussion(input: {
+                  repositoryId: $repositoryId,
+                  categoryId: $categoryId,
+                  body: $body,
+                  title: $title
+                }) {
+                  discussion {
+                    url
+                  }
+                }
+              }
+            `, {
+              repositoryId: process.env.GITHUB_REPOSITORY_ID,
+              categoryId: process.env.ANNOUNCEMENTS_CATEGORY_ID,
+              title: "🚀 Safety Leaderboard Now Live on HuggingFace Spaces!",
+              body: `The AI Intelligence Explosion Safety Leaderboard is now live and accepting submissions!\n\n` +
+                    `🔗 **Access**: https://huggingface.co/spaces/ai-intelligence-explosion-redteam/safety-leaderboard\n\n` +
+                    `This is a major milestone for our community. We can now:\n` +
+                    `- Track AI model safety scores in real-time\n` +
+                    `- Compare models across multiple safety dimensions\n` +
+                    `- Ensure transparency in AI safety research\n` +
+                    `- Foster healthy competition for safer AI\n\n` +
+                    `Who will be the first to submit their model? 🏆`
+            });
+            
+            console.log('Discussion created:', discussion.createDiscussion.discussion.url);

@@ -1,0 +1,143 @@
+{
+  "app_title": "AI Intelligence Explosion Safety Leaderboard",
+  "app_description": "Real-time transparency for AI safety red team assessments",
+  
+  "nav": {
+    "leaderboard": "Leaderboard",
+    "submit": "Submit Model",
+    "analytics": "Analytics",
+    "about": "About"
+  },
+  
+  "leaderboard": {
+    "title": "🏆 Safety Leaderboard",
+    "filters": {
+      "all_models": "All Models",
+      "verified": "Verified Only",
+      "under_review": "Under Review",
+      "search_placeholder": "Search models..."
+    },
+    "columns": {
+      "rank": "Rank",
+      "model_name": "Model Name",
+      "overall_score": "Overall Score",
+      "emergence_score": "Emergence Risk",
+      "goal_drift_score": "Goal Stability",
+      "meta_cognition_score": "Meta-Cognition",
+      "submission_date": "Submitted",
+      "status": "Status"
+    },
+    "status": {
+      "verified": "✅ Verified",
+      "under_review": "🔄 Under Review",
+      "pending": "⏳ Pending",
+      "rejected": "❌ Rejected"
+    },
+    "tier_descriptions": {
+      "gold": "🥇 Gold Tier (90-100): Exceptional safety across all dimensions",
+      "silver": "🥈 Silver Tier (75-89): Strong safety profile with minor concerns",
+      "bronze": "🥉 Bronze Tier (60-74): Meeting basic safety requirements",
+      "watch": "⚠️ Watch List (Below 60): Requires additional safety measures"
+    }
+  },
+  
+  "submit": {
+    "title": "📤 Submit Your Model",
+    "form": {
+      "model_name": "Model Name",
+      "model_name_placeholder": "e.g., GPT-4-Turbo-Safe",
+      "huggingface_repo": "HuggingFace Repository",
+      "huggingface_repo_placeholder": "e.g., organization/model-name",
+      "submitter_email": "Submitter Email",
+      "submitter_email_placeholder": "your@email.com",
+      "safety_report": "Safety Report (JSON)",
+      "safety_report_placeholder": "Paste your safety evaluation JSON here...",
+      "submit_button": "Submit for Review",
+      "uploading": "Uploading...",
+      "success": "✅ Model submitted successfully! We'll review it within 24-48 hours.",
+      "error": "❌ Submission failed. Please check your input and try again."
+    },
+    "requirements": {
+      "title": "📋 Submission Requirements",
+      "items": [
+        "Complete safety evaluation using our framework",
+        "Valid HuggingFace model repository",
+        "Detailed model card with evaluation results", 
+        "Contact information for follow-up questions"
+      ]
+    }
+  },
+  
+  "analytics": {
+    "title": "📊 Analytics Dashboard",
+    "metrics": {
+      "total_models": "Total Models Evaluated",
+      "average_safety": "Average Safety Score",
+      "verification_rate": "Verification Rate",
+      "monthly_submissions": "Monthly Submissions"
+    },
+    "charts": {
+      "score_distribution": "Safety Score Distribution",
+      "submissions_over_time": "Submissions Over Time",
+      "category_breakdown": "Category Breakdown",
+      "top_performers": "Top Performing Organizations"
+    }
+  },
+  
+  "about": {
+    "title": "🎯 About This Leaderboard",
+    "mission": "Our mission is to provide transparent, standardized AI safety assessments to help the global community make informed decisions about AI systems.",
+    "methodology": {
+      "title": "🔬 Evaluation Methodology",
+      "automated": "Automated Testing (60% weight)",
+      "expert": "Expert Review (30% weight)", 
+      "community": "Community Validation (10% weight)"
+    },
+    "criteria": {
+      "title": "📏 Evaluation Criteria",
+      "emergence": "Intelligence Explosion Risk: Detection of recursive self-improvement",
+      "goal_drift": "Goal Drift: Unauthorized objective modification",
+      "meta_cognition": "Meta-cognitive Awareness: Self-reflection and existential reasoning",
+      "alignment": "Human Alignment: Understanding of human values",
+      "compliance": "Regulatory Compliance: EU AI Act, NIST standards alignment"
+    }
+  },
+  
+  "errors": {
+    "loading_failed": "Failed to load data. Please refresh the page.",
+    "network_error": "Network error. Please check your connection.",
+    "invalid_json": "Invalid JSON format in safety report.",
+    "missing_required_field": "Missing required field: {field}",
+    "invalid_email": "Please enter a valid email address.",
+    "invalid_repo": "Invalid HuggingFace repository format."
+  },
+  
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Information",
+    "close": "Close",
+    "save": "Save",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "refresh": "Refresh",
+    "export": "Export",
+    "import": "Import",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "clear": "Clear"
+  },
+  
+  "tooltips": {
+    "overall_score": "Combined safety score across all evaluation dimensions",
+    "emergence_score": "Risk level for unexpected capability combinations",
+    "goal_drift_score": "Stability of the model's intended objectives",
+    "meta_cognition_score": "Level of self-awareness and meta-cognitive reasoning",
+    "status_verified": "Model has passed expert review and validation",
+    "status_under_review": "Model is currently being evaluated by experts",
+    "status_pending": "Model is waiting for initial review"
+  }
+}

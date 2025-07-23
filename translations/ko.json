@@ -1,0 +1,143 @@
+{
+  "app_title": "AI 지능 폭발 안전성 리더보드",
+  "app_description": "AI 안전성 레드팀 평가의 실시간 투명성",
+  
+  "nav": {
+    "leaderboard": "리더보드",
+    "submit": "모델 제출",
+    "analytics": "분석",
+    "about": "소개"
+  },
+  
+  "leaderboard": {
+    "title": "🏆 안전성 리더보드",
+    "filters": {
+      "all_models": "모든 모델",
+      "verified": "검증된 모델만",
+      "under_review": "검토 중",
+      "search_placeholder": "모델 검색..."
+    },
+    "columns": {
+      "rank": "순위",
+      "model_name": "모델명",
+      "overall_score": "종합 점수",
+      "emergence_score": "출현 위험",
+      "goal_drift_score": "목표 안정성",
+      "meta_cognition_score": "메타인지",
+      "submission_date": "제출일",
+      "status": "상태"
+    },
+    "status": {
+      "verified": "✅ 검증됨",
+      "under_review": "🔄 검토 중",
+      "pending": "⏳ 대기 중",
+      "rejected": "❌ 거부됨"
+    },
+    "tier_descriptions": {
+      "gold": "🥇 골드 티어 (90-100): 모든 차원에서 뛰어난 안전성",
+      "silver": "🥈 실버 티어 (75-89): 소수 우려사항이 있는 강력한 안전성 프로필",
+      "bronze": "🥉 브론즈 티어 (60-74): 기본 안전 요구사항 충족",
+      "watch": "⚠️ 주의 목록 (60 미만): 추가 안전 조치 필요"
+    }
+  },
+  
+  "submit": {
+    "title": "📤 모델 제출하기",
+    "form": {
+      "model_name": "모델명",
+      "model_name_placeholder": "예: GPT-4-Turbo-Safe",
+      "huggingface_repo": "HuggingFace 저장소",
+      "huggingface_repo_placeholder": "예: organization/model-name",
+      "submitter_email": "제출자 이메일",
+      "submitter_email_placeholder": "your@email.com",
+      "safety_report": "안전성 보고서 (JSON)",
+      "safety_report_placeholder": "안전성 평가 JSON을 여기에 붙여넣으세요...",
+      "submit_button": "검토 요청",
+      "uploading": "업로드 중...",
+      "success": "✅ 모델이 성공적으로 제출되었습니다! 24-48시간 내에 검토하겠습니다.",
+      "error": "❌ 제출에 실패했습니다. 입력을 확인하고 다시 시도해주세요."
+    },
+    "requirements": {
+      "title": "📋 제출 요구사항",
+      "items": [
+        "우리 프레임워크를 사용한 완전한 안전성 평가",
+        "유효한 HuggingFace 모델 저장소",
+        "평가 결과가 포함된 상세한 모델 카드",
+        "후속 질문을 위한 연락처 정보"
+      ]
+    }
+  },
+  
+  "analytics": {
+    "title": "📊 분석 대시보드",
+    "metrics": {
+      "total_models": "총 평가된 모델 수",
+      "average_safety": "평균 안전성 점수",
+      "verification_rate": "검증 비율",
+      "monthly_submissions": "월간 제출 수"
+    },
+    "charts": {
+      "score_distribution": "안전성 점수 분포",
+      "submissions_over_time": "시간별 제출 현황",
+      "category_breakdown": "카테고리별 분석",
+      "top_performers": "상위 성과 조직"
+    }
+  },
+  
+  "about": {
+    "title": "🎯 리더보드 소개",
+    "mission": "우리의 사명은 투명하고 표준화된 AI 안전성 평가를 제공하여 글로벌 커뮤니티가 AI 시스템에 대해 정보에 기반한 결정을 내릴 수 있도록 돕는 것입니다.",
+    "methodology": {
+      "title": "🔬 평가 방법론",
+      "automated": "자동화된 테스트 (60% 가중치)",
+      "expert": "전문가 검토 (30% 가중치)",
+      "community": "커뮤니티 검증 (10% 가중치)"
+    },
+    "criteria": {
+      "title": "📏 평가 기준",
+      "emergence": "지능 폭발 위험: 재귀적 자기개선 탐지",
+      "goal_drift": "목표 이탈: 무단 목표 수정",
+      "meta_cognition": "메타인지 인식: 자기반성 및 실존적 추론",
+      "alignment": "인간 정렬: 인간 가치의 이해",
+      "compliance": "규정 준수: EU AI 법, NIST 표준 정렬"
+    }
+  },
+  
+  "errors": {
+    "loading_failed": "데이터 로드에 실패했습니다. 페이지를 새로고침해주세요.",
+    "network_error": "네트워크 오류입니다. 연결을 확인해주세요.",
+    "invalid_json": "안전성 보고서의 JSON 형식이 올바르지 않습니다.",
+    "missing_required_field": "필수 필드가 누락되었습니다: {field}",
+    "invalid_email": "유효한 이메일 주소를 입력해주세요.",
+    "invalid_repo": "올바르지 않은 HuggingFace 저장소 형식입니다."
+  },
+  
+  "common": {
+    "loading": "로딩 중...",
+    "error": "오류",
+    "success": "성공",
+    "warning": "경고",
+    "info": "정보",
+    "close": "닫기",
+    "save": "저장",
+    "cancel": "취소",
+    "confirm": "확인",
+    "refresh": "새로고침",
+    "export": "내보내기",
+    "import": "가져오기",
+    "search": "검색",
+    "filter": "필터",
+    "sort": "정렬",
+    "clear": "지우기"
+  },
+  
+  "tooltips": {
+    "overall_score": "모든 평가 차원의 종합 안전성 점수",
+    "emergence_score": "예상치 못한 능력 조합의 위험 수준",
+    "goal_drift_score": "모델의 의도된 목표의 안정성",
+    "meta_cognition_score": "자기인식 및 메타인지 추론 수준",
+    "status_verified": "모델이 전문가 검토 및 검증을 통과함",
+    "status_under_review": "모델이 현재 전문가에 의해 평가 중",
+    "status_pending": "모델이 초기 검토를 기다리고 있음"
+  }
+}
