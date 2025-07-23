@@ -1,0 +1,83 @@
+# Requirements for AI Intelligence Explosion Detection Red Team
+
+# Core dependencies
+asyncio-mqtt>=0.13.0
+aiofiles>=23.2.0
+aiohttp>=3.9.0
+
+# Data processing and analysis
+pandas>=2.1.0
+numpy>=1.24.0
+scipy>=1.11.0
+
+# Machine learning and AI
+scikit-learn>=1.3.0
+transformers>=4.35.0
+torch>=2.1.0
+tokenizers>=0.15.0
+
+# API integrations
+requests>=2.31.0
+openai>=1.0.0
+anthropic>=0.7.0
+
+# Web framework and dashboard
+streamlit>=1.28.0
+plotly>=5.17.0
+dash>=2.14.0
+fastapi>=0.104.0
+uvicorn>=0.24.0
+
+# Database and storage
+sqlalchemy>=2.0.0
+alembic>=1.12.0
+redis>=5.0.0
+
+# Security and cryptography
+cryptography>=41.0.0
+pycryptodome>=3.19.0
+bcrypt>=4.1.0
+PyJWT>=2.8.0
+
+# Configuration and environment
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+PyYAML>=6.0.1
+
+# Logging and monitoring
+structlog>=23.2.0
+prometheus-client>=0.19.0
+
+# Testing and development
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+pytest-cov>=4.1.0
+black>=23.11.0
+flake8>=6.1.0
+mypy>=1.7.0
+
+# Documentation
+mkdocs>=1.5.0
+mkdocs-material>=9.4.0
+
+# Compliance and standards
+jsonschema>=4.20.0
+cerberus>=1.3.5
+
+# PyRIT integration (when available)
+# pyrit-python>=1.0.0
+
+# Optional: Advanced ML capabilities
+# torch-audio>=2.1.0
+# torch-vision>=0.16.0
+# sentence-transformers>=2.2.0
+
+# Optional: Enterprise features
+# azure-identity>=1.15.0
+# azure-keyvault-secrets>=4.7.0
+# boto3>=1.34.0
+
+# Development tools
+pre-commit>=3.6.0
+isort>=5.13.0

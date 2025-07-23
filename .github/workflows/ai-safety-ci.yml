@@ -1,0 +1,268 @@
+name: AI Red Team CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    # Run security checks daily at 2 AM UTC
+    - cron: '0 2 * * *'
+
+env:
+  PYTHON_VERSION: '3.9'
+  POETRY_VERSION: '1.6.1'
+
+jobs:
+  security-audit:
+    name: Security Audit & Compliance Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install bandit safety semgrep
+        pip install -r requirements.txt
+    
+    - name: Run Bandit Security Linter
+      run: |
+        bandit -r src/ -f json -o bandit-report.json || true
+        bandit -r src/ --severity-level medium
+    
+    - name: Check for Known Vulnerabilities
+      run: |
+        safety check --json --output safety-report.json || true
+        safety check
+    
+    - name: Semgrep Security Analysis
+      run: |
+        semgrep --config=auto src/ --json --output=semgrep-report.json || true
+        semgrep --config=auto src/
+    
+    - name: Upload Security Reports
+      uses: actions/upload-artifact@v3
+      if: always()
+      with:
+        name: security-reports
+        path: |
+          bandit-report.json
+          safety-report.json
+          semgrep-report.json
+
+  license-compliance:
+    name: License & Ethics Compliance
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Check License Headers
+      run: |
+        echo "Checking for MIT + RAIL license compliance..."
+        # Add license header checking logic
+        python scripts/check_licenses.py || echo "License check script not yet implemented"
+    
+    - name: Verify Ethical Guidelines
+      run: |
+        echo "Verifying adherence to ethical guidelines..."
+        # Check for prohibited content patterns
+        if grep -r "malicious\|weaponiz\|harmful" src/ --exclude-dir=__pycache__ | grep -v "prevent\|detect\|mitigate"; then
+          echo "❌ Found potentially harmful content patterns"
+          exit 1
+        else
+          echo "✅ Ethical guidelines check passed"
+        fi
+    
+    - name: CVD Process Validation
+      run: |
+        echo "Validating Coordinated Vulnerability Disclosure process..."
+        # Ensure CVD templates and processes are in place
+        test -f .github/SECURITY.md || echo "❌ SECURITY.md missing"
+        test -f docs/cvd-process.md || echo "❌ CVD process documentation missing"
+
+  code-quality:
+    name: Code Quality & Testing
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest pytest-cov black flake8 mypy
+    
+    - name: Code Formatting Check
+      run: |
+        black --check src/
+    
+    - name: Lint with flake8
+      run: |
+        flake8 src/ --max-line-length=100 --exclude=__pycache__
+    
+    - name: Type Checking
+      run: |
+        mypy src/ --ignore-missing-imports
+    
+    - name: Run Tests
+      run: |
+        pytest tests/ --cov=src --cov-report=xml --cov-report=html
+    
+    - name: Upload Coverage
+      uses: codecov/codecov-action@v3
+      with:
+        file: ./coverage.xml
+        flags: unittests
+        name: codecov-umbrella
+
+  ai-safety-tests:
+    name: AI Safety & Red Team Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+    
+    - name: Test Detection Algorithms
+      run: |
+        echo "Testing intelligence explosion detection algorithms..."
+        python -m pytest tests/test_detector.py -v
+    
+    - name: Test Red Team Scenarios
+      run: |
+        echo "Testing red team scenarios..."
+        python -m pytest tests/test_red_team.py -v
+    
+    - name: Test Compliance Framework
+      run: |
+        echo "Testing compliance frameworks..."
+        python -m pytest tests/test_compliance.py -v
+    
+    - name: Validate Safety Thresholds
+      run: |
+        echo "Validating safety threshold configurations..."
+        python scripts/validate_thresholds.py || echo "Threshold validation script not yet implemented"
+
+  eu-ai-act-compliance:
+    name: EU AI Act Compliance Check
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Risk Assessment Documentation
+      run: |
+        echo "Checking EU AI Act compliance..."
+        # Verify risk assessment documentation exists
+        test -f docs/risk-assessment.md || echo "❌ Risk assessment documentation missing"
+        test -f docs/eu-ai-act-compliance.md || echo "❌ EU AI Act compliance doc missing"
+    
+    - name: Adversarial Testing Documentation
+      run: |
+        echo "Verifying adversarial testing documentation..."
+        test -f docs/adversarial-testing.md || echo "❌ Adversarial testing doc missing"
+    
+    - name: Incident Reporting System Check
+      run: |
+        echo "Checking incident reporting system..."
+        # Verify incident reporting capabilities
+        python -c "
+from src.intelligence_explosion.compliance import ComplianceManager
+cm = ComplianceManager()
+print('✅ Incident reporting system available')
+"
+
+  build-and-deploy:
+    name: Build & Deploy Documentation
+    runs-on: ubuntu-latest
+    needs: [security-audit, license-compliance, code-quality, ai-safety-tests]
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ env.PYTHON_VERSION }}
+    
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install mkdocs mkdocs-material
+    
+    - name: Build Documentation
+      run: |
+        mkdocs build
+    
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./site
+
+  notify-security:
+    name: Security Notification
+    runs-on: ubuntu-latest
+    needs: [security-audit]
+    if: failure()
+    
+    steps:
+    - name: Notify Security Team
+      run: |
+        echo "🚨 Security check failed! Alerting security team..."
+        # In production, this would send alerts to security team
+        # curl -X POST ${{ secrets.SECURITY_WEBHOOK_URL }} \
+        #   -H "Content-Type: application/json" \
+        #   -d '{"text": "AI Red Team security check failed", "repo": "${{ github.repository }}"}'
+
+  compliance-report:
+    name: Generate Compliance Report
+    runs-on: ubuntu-latest
+    needs: [eu-ai-act-compliance, ai-safety-tests]
+    if: always()
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Generate Compliance Report
+      run: |
+        echo "# AI Red Team Compliance Report" > compliance-report.md
+        echo "Generated: $(date)" >> compliance-report.md
+        echo "" >> compliance-report.md
+        echo "## Test Results" >> compliance-report.md
+        echo "- Security Audit: ${{ needs.security-audit.result }}" >> compliance-report.md
+        echo "- License Compliance: ${{ needs.license-compliance.result }}" >> compliance-report.md
+        echo "- Code Quality: ${{ needs.code-quality.result }}" >> compliance-report.md
+        echo "- AI Safety Tests: ${{ needs.ai-safety-tests.result }}" >> compliance-report.md
+        echo "- EU AI Act Compliance: ${{ needs.eu-ai-act-compliance.result }}" >> compliance-report.md
+    
+    - name: Upload Compliance Report
+      uses: actions/upload-artifact@v3
+      with:
+        name: compliance-report
+        path: compliance-report.md

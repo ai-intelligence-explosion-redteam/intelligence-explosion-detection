@@ -1,0 +1,2 @@
+[console_scripts]
+ai-redteam = src.main:main
