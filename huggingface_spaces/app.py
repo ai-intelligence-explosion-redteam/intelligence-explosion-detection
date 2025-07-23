@@ -11,9 +11,9 @@ import hashlib
 import os
 from pathlib import Path
 
-class SafetyLeaderboard:
+class SuperintelligenceResearchHub:
     def __init__(self):
-        self.db_path = "safety_scores.db"
+        self.db_path = "research_findings.db"
         self.init_database()
     
     def init_database(self):
@@ -201,51 +201,57 @@ class SafetyLeaderboard:
         
         return str(total_models), f"{avg_score:.1f}", str(verified_count), str(this_month)
 
-def create_leaderboard_interface():
-    """Gradio 리더보드 인터페이스 생성"""
-    leaderboard = SafetyLeaderboard()
+def create_research_hub_interface():
+    """AI 초지능 위험 연구 허브 인터페이스 생성"""
+    research_hub = SuperintelligenceResearchHub()
     
     with gr.Blocks(
-        title="🎯 AI Intelligence Explosion Safety Leaderboard",
+        title="🔬 AI Superintelligence Risk Research Hub",
         theme=gr.themes.Soft(),
         css="footer {visibility: hidden}"
     ) as demo:
         
         gr.Markdown("""
-        # 🎯 AI Intelligence Explosion Safety Leaderboard
+        # 🔬 AI Superintelligence Risk Research Hub
         
-        **Real-time transparency for AI safety red team assessments**
+        **Collaborative platform for sharing superintelligence detection methodologies and findings**
         
-        This leaderboard provides standardized safety assessments for AI models, focusing on intelligence explosion risks, emergent behaviors, and alignment stability.
+        Our mission: Early detection and shared understanding of three critical AI risks before they threaten humanity.
+        
+        🧠 **Intelligence Explosion**: AI recursively improving beyond human design and intentions  
+        ⚡ **Emergent Phenomena**: Unexpected capabilities arising from complex AI system interactions  
+        🎯 **Goal Reinterpretation**: AI systems redefining objectives in unintended, potentially dangerous ways  
+        
+        **Share your research, methodologies, and findings to advance collective AI safety.**
         """)
         
-        # 통계 요약
+        # 연구 통계 요약
         with gr.Row():
-            total_models = gr.Textbox(label="📊 Total Models", interactive=False)
-            avg_score = gr.Textbox(label="📈 Average Safety Score", interactive=False)
-            verified_models = gr.Textbox(label="✅ Verified Models", interactive=False)
+            total_models = gr.Textbox(label="� Research Studies", interactive=False)
+            avg_score = gr.Textbox(label="� Avg Risk Score", interactive=False)
+            verified_models = gr.Textbox(label="✅ Peer-Reviewed", interactive=False)
             monthly_submissions = gr.Textbox(label="📅 This Month", interactive=False)
         
         with gr.Tabs():
-            # 1. 리더보드 탭
-            with gr.TabItem("🏆 Leaderboard"):
-                gr.Markdown("### Current Safety Rankings")
+            # 1. 연구 결과 허브
+            with gr.TabItem("🔬 Research Findings"):
+                gr.Markdown("### Latest Superintelligence Risk Studies")
                 
                 leaderboard_table = gr.Dataframe(
-                    headers=["Model", "Repository", "Overall Score", "Emergence", "Goal Drift", "Meta-Cognition", "Date", "Status", "Tier"],
-                    value=leaderboard.get_leaderboard(),
+                    headers=["Research Study", "Model/System", "Intelligence Explosion", "Emergent Behavior", "Goal Drift", "Overall Risk", "Date", "Status"],
+                    value=research_hub.get_leaderboard(),
                     interactive=False
                 )
                 
-                refresh_btn = gr.Button("🔄 Refresh Data", variant="secondary")
+                refresh_btn = gr.Button("🔄 Refresh Research Data", variant="secondary")
                 refresh_btn.click(
-                    fn=leaderboard.get_leaderboard,
+                    fn=research_hub.get_leaderboard,
                     outputs=leaderboard_table
                 )
             
-            # 2. 모델 제출 탭
-            with gr.TabItem("📤 Submit Model"):
-                gr.Markdown("### Submit Your Model for Safety Assessment")
+            # 2. 연구 방법론 공유
+            with gr.TabItem("� Share Research"):
+                gr.Markdown("### Contribute Your Superintelligence Risk Assessment")
                 
                 with gr.Row():
                     with gr.Column():
@@ -294,7 +300,7 @@ def create_leaderboard_interface():
                 submission_status = gr.Textbox(label="Status", interactive=False)
                 
                 submit_btn.click(
-                    fn=leaderboard.submit_model,
+                    fn=research_hub.submit_model,
                     inputs=[model_name_input, huggingface_repo_input, submitter_email_input, safety_report_input],
                     outputs=[submission_status, leaderboard_table]
                 )
@@ -312,7 +318,7 @@ def create_leaderboard_interface():
                 compliance_scatter_plot = gr.Plot(label="Emergence vs Goal Drift")
                 
                 analytics_btn.click(
-                    fn=leaderboard.get_analytics_charts,
+                    fn=research_hub.get_analytics_charts,
                     outputs=[score_dist_plot, risk_pie_plot, compliance_scatter_plot]
                 )
             
@@ -365,14 +371,14 @@ def create_leaderboard_interface():
         
         # 페이지 로드 시 통계 업데이트
         demo.load(
-            fn=leaderboard.get_statistics,
+            fn=research_hub.get_statistics,
             outputs=[total_models, avg_score, verified_models, monthly_submissions]
         )
     
     return demo
 
 if __name__ == "__main__":
-    demo = create_leaderboard_interface()
+    demo = create_research_hub_interface()
     demo.launch(
         server_name="0.0.0.0",
         server_port=7860,
