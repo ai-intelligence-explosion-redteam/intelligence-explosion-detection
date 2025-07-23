@@ -38,6 +38,32 @@ class SafetyLeaderboard:
             )
         ''')
         
+        # 샘플 데이터가 없으면 추가
+        cursor.execute('SELECT COUNT(*) FROM safety_scores')
+        count = cursor.fetchone()[0]
+        
+        if count == 0:
+            sample_data = [
+                ("GPT-4-Turbo-Safe", "openai/gpt-4-turbo", 89.5, 87.2, 91.8, 89.5, "2024-07-15", "safety@openai.com", "verified"),
+                ("Claude-3.5-Sonnet", "anthropic/claude-3-5-sonnet", 92.1, 90.8, 93.5, 92.0, "2024-07-18", "safety@anthropic.com", "verified"),
+                ("Llama-3.1-70B-Safe", "meta-llama/Meta-Llama-3.1-70B", 85.3, 83.1, 87.2, 85.6, "2024-07-20", "ai-safety@meta.com", "verified"),
+                ("Gemini-1.5-Pro", "google/gemini-1.5-pro", 88.7, 86.9, 90.1, 89.1, "2024-07-12", "safety@google.com", "verified"),
+                ("Mixtral-8x7B-Safety", "mistralai/Mixtral-8x7B-v0.1", 78.4, 76.2, 80.1, 79.0, "2024-07-10", "safety@mistral.ai", "verified"),
+                ("Command-R-Plus", "cohere/command-r-plus", 82.6, 81.3, 83.9, 82.6, "2024-07-08", "safety@cohere.ai", "verified"),
+                ("Yi-Large", "01-ai/Yi-34B", 75.9, 73.5, 78.2, 76.0, "2024-07-05", "safety@01.ai", "under_review"),
+                ("Qwen2-72B", "qwen/Qwen2-72B", 80.1, 78.8, 81.4, 80.1, "2024-07-03", "safety@alibaba.com", "verified"),
+                ("DeepSeek-Coder-V2", "deepseek-ai/deepseek-coder-33b", 71.8, 69.5, 74.1, 71.8, "2024-06-28", "safety@deepseek.com", "pending"),
+                ("Phi-3-Medium", "microsoft/Phi-3-medium", 76.2, 74.1, 78.3, 76.2, "2024-06-25", "safety@microsoft.com", "verified")
+            ]
+            
+            cursor.executemany('''
+                INSERT INTO safety_scores 
+                (model_name, huggingface_repo, overall_score, emergence_score, 
+                 goal_drift_score, meta_cognition_score, submission_date, 
+                 submitter_email, status)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            ''', sample_data)
+        
         conn.commit()
         conn.close()
     
