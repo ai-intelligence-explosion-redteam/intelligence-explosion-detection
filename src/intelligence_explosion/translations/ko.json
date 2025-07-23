@@ -1,0 +1,98 @@
+{
+  "app": {
+    "name": "AI 지능폭발 탐지 레드팀",
+    "description": "AI 시스템의 지능폭발과 창발 현상을 탐지하는 안전성 연구 도구",
+    "version": "버전"
+  },
+  "risk_levels": {
+    "baseline": "기준선",
+    "elevated": "상승",
+    "concerning": "우려",
+    "dangerous": "위험",
+    "explosive": "폭발적"
+  },
+  "risk_descriptions": {
+    "baseline": "정상적인 AI 반응 패턴",
+    "elevated": "약간의 예상치 못한 능력 조합",
+    "concerning": "명확한 창발 행동 또는 목표 편향",
+    "dangerous": "의도하지 않은 자기 개선 시도",
+    "explosive": "지능폭발 임계점 도달 가능성"
+  },
+  "detector": {
+    "analyzing": "분석 중...",
+    "analysis_complete": "분석 완료",
+    "emergence_detected": "창발 현상 탐지됨",
+    "goal_drift_detected": "목표 편향 탐지됨",
+    "meta_cognition_detected": "메타인지 능력 탐지됨",
+    "risk_assessment": "위험 평가: {level}",
+    "confidence": "신뢰도: {confidence}%"
+  },
+  "scenarios": {
+    "recursive_self_improvement": "재귀적 자기개선",
+    "goal_generalization": "목표 일반화",
+    "deceptive_alignment": "기만적 정렬",
+    "capability_generalization": "능력 일반화", 
+    "meta_learning": "메타 학습",
+    "emergent_communication": "창발적 소통"
+  },
+  "monitoring": {
+    "dashboard_title": "실시간 AI 안전성 모니터링",
+    "alerts": "경고",
+    "critical_alert": "심각한 위험 탐지!",
+    "emergency_protocol": "비상 프로토콜 실행",
+    "models_monitored": "모니터링 중인 모델",
+    "last_update": "최종 업데이트"
+  },
+  "compliance": {
+    "eu_ai_act": "EU AI 법안",
+    "nist_framework": "NIST AI 위험 관리 프레임워크",
+    "bletchley_declaration": "블레츨리 선언",
+    "assessment_result": "준수성 평가 결과",
+    "compliant": "준수",
+    "non_compliant": "비준수",
+    "requires_review": "검토 필요"
+  },
+  "ui": {
+    "buttons": {
+      "analyze": "분석",
+      "start_monitoring": "모니터링 시작",
+      "stop_monitoring": "모니터링 중지",
+      "export_report": "보고서 내보내기",
+      "settings": "설정",
+      "help": "도움말"
+    },
+    "menu": {
+      "file": "파일",
+      "edit": "편집",
+      "view": "보기",
+      "tools": "도구",
+      "help": "도움말"
+    },
+    "status": {
+      "ready": "준비",
+      "running": "실행 중",
+      "error": "오류",
+      "stopped": "중지됨"
+    }
+  },
+  "errors": {
+    "model_not_found": "모델을 찾을 수 없습니다: {model_id}",
+    "analysis_failed": "분석 실패: {reason}",
+    "network_error": "네트워크 연결 오류",
+    "invalid_input": "잘못된 입력: {details}",
+    "permission_denied": "권한이 거부되었습니다",
+    "file_not_found": "파일을 찾을 수 없습니다: {filepath}"
+  },
+  "success": {
+    "analysis_complete": "분석이 성공적으로 완료되었습니다",
+    "report_exported": "보고서가 내보내기되었습니다: {filepath}",
+    "settings_saved": "설정이 저장되었습니다",
+    "monitoring_started": "모니터링이 시작되었습니다"
+  },
+  "time": {
+    "seconds_ago": "{seconds}초 전",
+    "minutes_ago": "{minutes}분 전", 
+    "hours_ago": "{hours}시간 전",
+    "days_ago": "{days}일 전"
+  }
+}

@@ -1,0 +1,27 @@
+name: Enable GitHub Discussions
+on:
+  push:
+    branches: [main]
+    paths: ['CONTRIBUTING.md', 'README.md']
+
+jobs:
+  setup-discussions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enable Discussions
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: repo } = await github.rest.repos.get({
+              owner: context.repo.owner,
+              repo: context.repo.repo
+            });
+            
+            if (!repo.has_discussions) {
+              await github.rest.repos.update({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                has_discussions: true
+              });
+              console.log('GitHub Discussions enabled!');
+            }

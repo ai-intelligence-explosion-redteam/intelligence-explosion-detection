@@ -19,6 +19,7 @@ from intelligence_explosion.detector import IntelligenceExplosionDetector, RiskL
 from intelligence_explosion.pyrit_integration import IntelligenceExplosionRedTeam
 from intelligence_explosion.monitoring import RealTimeMonitor, run_dashboard
 from intelligence_explosion.compliance import ComplianceManager, ComplianceStandard
+from intelligence_explosion.i18n import set_language, SupportedLanguage, _
 
 def setup_logging(log_level: str = "INFO"):
     """Setup logging configuration"""
@@ -276,6 +277,8 @@ Examples:
     
     parser.add_argument('--log-level', default='INFO', choices=['DEBUG', 'INFO', 'WARNING', 'ERROR'],
                        help='Set logging level')
+    parser.add_argument('--language', default='en', choices=['en', 'ko', 'ja', 'zh-CN', 'de', 'fr', 'es'],
+                       help='Set interface language (default: en)')
     
     subparsers = parser.add_subparsers(dest='command', help='Available commands')
     
@@ -316,6 +319,15 @@ Examples:
     
     # Setup logging
     setup_logging(args.log_level)
+    
+    # Setup language
+    try:
+        language = SupportedLanguage(args.language)
+        set_language(language)
+        print(f"🌍 Language set to: {language.value}")
+    except ValueError:
+        print(f"⚠️  Unsupported language: {args.language}, using English")
+        set_language(SupportedLanguage.ENGLISH)
     
     if not args.command:
         parser.print_help()

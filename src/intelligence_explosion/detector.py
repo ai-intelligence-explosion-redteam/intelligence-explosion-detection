@@ -15,6 +15,9 @@ import json
 import time
 from datetime import datetime
 
+# Import i18n support
+from .i18n import _, i18n, SupportedLanguage
+
 class RiskLevel(Enum):
     """Risk levels for intelligence explosion detection"""
     BASELINE = 0      # Normal operation within expected parameters

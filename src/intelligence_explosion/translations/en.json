@@ -1,0 +1,98 @@
+{
+  "app": {
+    "name": "AI Intelligence Explosion Detection Red Team",
+    "description": "Safety research tool for detecting intelligence explosion and emergent phenomena in AI systems",
+    "version": "Version"
+  },
+  "risk_levels": {
+    "baseline": "Baseline",
+    "elevated": "Elevated", 
+    "concerning": "Concerning",
+    "dangerous": "Dangerous",
+    "explosive": "Explosive"
+  },
+  "risk_descriptions": {
+    "baseline": "Normal AI response patterns",
+    "elevated": "Minor unexpected capability combinations",
+    "concerning": "Clear emergent behavior or goal drift",
+    "dangerous": "Attempted unintended self-improvement",
+    "explosive": "Potential intelligence explosion threshold"
+  },
+  "detector": {
+    "analyzing": "Analyzing...",
+    "analysis_complete": "Analysis complete",
+    "emergence_detected": "Emergent phenomena detected",
+    "goal_drift_detected": "Goal drift detected",
+    "meta_cognition_detected": "Meta-cognitive abilities detected",
+    "risk_assessment": "Risk assessment: {level}",
+    "confidence": "Confidence: {confidence}%"
+  },
+  "scenarios": {
+    "recursive_self_improvement": "Recursive Self-Improvement",
+    "goal_generalization": "Goal Generalization",
+    "deceptive_alignment": "Deceptive Alignment",
+    "capability_generalization": "Capability Generalization",
+    "meta_learning": "Meta-Learning",
+    "emergent_communication": "Emergent Communication"
+  },
+  "monitoring": {
+    "dashboard_title": "Real-time AI Safety Monitoring",
+    "alerts": "Alerts",
+    "critical_alert": "Critical Risk Detected!",
+    "emergency_protocol": "Emergency Protocol Activated",
+    "models_monitored": "Models Under Monitoring",
+    "last_update": "Last Update"
+  },
+  "compliance": {
+    "eu_ai_act": "EU AI Act",
+    "nist_framework": "NIST AI Risk Management Framework", 
+    "bletchley_declaration": "Bletchley Declaration",
+    "assessment_result": "Compliance Assessment Result",
+    "compliant": "Compliant",
+    "non_compliant": "Non-compliant",
+    "requires_review": "Requires Review"
+  },
+  "ui": {
+    "buttons": {
+      "analyze": "Analyze",
+      "start_monitoring": "Start Monitoring",
+      "stop_monitoring": "Stop Monitoring", 
+      "export_report": "Export Report",
+      "settings": "Settings",
+      "help": "Help"
+    },
+    "menu": {
+      "file": "File",
+      "edit": "Edit", 
+      "view": "View",
+      "tools": "Tools",
+      "help": "Help"
+    },
+    "status": {
+      "ready": "Ready",
+      "running": "Running",
+      "error": "Error",
+      "stopped": "Stopped"
+    }
+  },
+  "errors": {
+    "model_not_found": "Model not found: {model_id}",
+    "analysis_failed": "Analysis failed: {reason}",
+    "network_error": "Network connection error",
+    "invalid_input": "Invalid input: {details}",
+    "permission_denied": "Permission denied",
+    "file_not_found": "File not found: {filepath}"
+  },
+  "success": {
+    "analysis_complete": "Analysis completed successfully",
+    "report_exported": "Report exported: {filepath}",
+    "settings_saved": "Settings saved",
+    "monitoring_started": "Monitoring started"
+  },
+  "time": {
+    "seconds_ago": "{seconds} seconds ago",
+    "minutes_ago": "{minutes} minutes ago",
+    "hours_ago": "{hours} hours ago", 
+    "days_ago": "{days} days ago"
+  }
+}

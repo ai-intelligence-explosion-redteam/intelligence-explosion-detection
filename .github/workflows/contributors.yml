@@ -1,0 +1,262 @@
+name: 🏆 Update Contributors
+
+on:
+  pull_request:
+    types: [closed]
+  issues:
+    types: [closed]
+  schedule:
+    # 매월 1일 자동 업데이트
+    - cron: '0 0 1 * *'
+
+jobs:
+  update-contributors:
+    if: github.event.pull_request.merged == true || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          
+      - name: Install dependencies
+        run: |
+          npm install @octokit/rest
+          
+      - name: Update contributors
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            const { Octokit } = require('@octokit/rest');
+            
+            const octokit = new Octokit({
+              auth: process.env.GITHUB_TOKEN
+            });
+            
+            // Get all contributors
+            const { data: contributors } = await octokit.rest.repos.listContributors({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              per_page: 100
+            });
+            
+            // Get PRs and issues for each contributor
+            const contributorStats = {};
+            
+            for (const contributor of contributors) {
+              const { data: prs } = await octokit.rest.pulls.list({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                creator: contributor.login,
+                state: 'closed',
+                per_page: 100
+              });
+              
+              const mergedPRs = prs.filter(pr => pr.merged_at);
+              
+              const { data: issues } = await octokit.rest.issues.listForRepo({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                creator: contributor.login,
+                state: 'closed',
+                per_page: 100
+              });
+              
+              contributorStats[contributor.login] = {
+                name: contributor.login,
+                avatar: contributor.avatar_url,
+                contributions: contributor.contributions,
+                mergedPRs: mergedPRs.length,
+                issues: issues.length,
+                profile: contributor.html_url
+              };
+            }
+            
+            // Generate badges
+            function getBadge(stats) {
+              const badges = [];
+              
+              if (stats.mergedPRs >= 10) badges.push('🥇 Gold Contributor');
+              else if (stats.mergedPRs >= 5) badges.push('🥈 Silver Contributor');
+              else if (stats.mergedPRs >= 1) badges.push('🥉 Bronze Contributor');
+              
+              if (stats.issues >= 5) badges.push('🐛 Issue Hunter');
+              
+              return badges;
+            }
+            
+            // Update CONTRIBUTORS.md
+            let contributorsContent = fs.readFileSync('CONTRIBUTORS.md', 'utf8');
+            
+            // Generate Gold contributors section
+            const goldContributors = Object.values(contributorStats)
+              .filter(stats => stats.mergedPRs >= 10)
+              .sort((a, b) => b.mergedPRs - a.mergedPRs);
+              
+            const goldSection = goldContributors.map(stats => 
+              `- **[${stats.name}](${stats.profile})** - ${stats.mergedPRs} PRs, ${stats.contributions} commits`
+            ).join('\n');
+            
+            // Generate Silver contributors section
+            const silverContributors = Object.values(contributorStats)
+              .filter(stats => stats.mergedPRs >= 5 && stats.mergedPRs < 10)
+              .sort((a, b) => b.mergedPRs - a.mergedPRs);
+              
+            const silverSection = silverContributors.map(stats => 
+              `- **[${stats.name}](${stats.profile})** - ${stats.mergedPRs} PRs, ${stats.contributions} commits`
+            ).join('\n');
+            
+            // Generate Bronze contributors section
+            const bronzeContributors = Object.values(contributorStats)
+              .filter(stats => stats.mergedPRs >= 1 && stats.mergedPRs < 5)
+              .sort((a, b) => b.mergedPRs - a.mergedPRs);
+              
+            const bronzeSection = bronzeContributors.map(stats => 
+              `- **[${stats.name}](${stats.profile})** - ${stats.mergedPRs} PRs, ${stats.contributions} commits`
+            ).join('\n');
+            
+            // Update sections
+            contributorsContent = contributorsContent.replace(
+              /### 🥇 Gold Contributors \(10\+ 승인된 PR\)\n<!-- 이 섹션은 자동으로 업데이트됩니다 -->/,
+              `### 🥇 Gold Contributors (10+ 승인된 PR)\n${goldSection || '아직 골드 기여자가 없습니다.'}`
+            );
+            
+            contributorsContent = contributorsContent.replace(
+              /### 🥈 Silver Contributors \(5\+ 승인된 PR\)\n<!-- 이 섹션은 자동으로 업데이트됩니다 -->/,
+              `### 🥈 Silver Contributors (5+ 승인된 PR)\n${silverSection || '아직 실버 기여자가 없습니다.'}`
+            );
+            
+            contributorsContent = contributorsContent.replace(
+              /### 🥉 Bronze Contributors \(1\+ 승인된 PR\)\n<!-- 이 섹션은 자동으로 업데이트됩니다 -->/,
+              `### 🥉 Bronze Contributors (1+ 승인된 PR)\n${bronzeSection || '아직 브론즈 기여자가 없습니다.'}`
+            );
+            
+            // Write updated content
+            fs.writeFileSync('CONTRIBUTORS.md', contributorsContent);
+            
+            console.log('Contributors updated successfully!');
+            
+      - name: Update monthly stats
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Get current month stats
+            const now = new Date();
+            const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+            
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed',
+              since: monthStart.toISOString(),
+              per_page: 100
+            });
+            
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'closed',
+              since: monthStart.toISOString(),
+              per_page: 100
+            });
+            
+            const mergedPRs = prs.filter(pr => pr.merged_at);
+            const uniqueContributors = new Set();
+            
+            mergedPRs.forEach(pr => uniqueContributors.add(pr.user.login));
+            issues.forEach(issue => uniqueContributors.add(issue.user.login));
+            
+            const monthYear = now.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long' });
+            const statsLine = `${monthYear}: ${mergedPRs.length}개 PR, ${issues.length}개 이슈, ${uniqueContributors.size}명 기여자`;
+            
+            console.log('Monthly stats:', statsLine);
+            
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add CONTRIBUTORS.md
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🏆 Update contributors list [automated]"
+            git push
+          fi
+          
+  welcome-new-contributor:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check if first contribution
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: prs } = await github.rest.pulls.list({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              creator: context.payload.pull_request.user.login,
+              state: 'closed'
+            });
+            
+            const mergedPRs = prs.filter(pr => pr.merged_at);
+            
+            if (mergedPRs.length === 1) {
+              // First contribution!
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.payload.pull_request.number,
+                body: `🎉 **첫 기여를 축하합니다!** @${context.payload.pull_request.user.login}\n\n` +
+                      `환영합니다! AI Intelligence Explosion Detection Red Team에 첫 번째 기여를 해주셔서 감사합니다.\n\n` +
+                      `🏅 **Bronze Contributor** 배지를 획득하셨습니다!\n\n` +
+                      `다음 단계로 더 많이 기여해보세요:\n` +
+                      `- 🥈 Silver Contributor: 5개 PR 승인 시\n` +
+                      `- 🥇 Gold Contributor: 10개 PR 승인 시\n\n` +
+                      `기여자 가이드: [CONTRIBUTING.md](./CONTRIBUTING.md)\n` +
+                      `커뮤니티 참여: [GitHub Discussions](../../discussions)\n\n` +
+                      `함께 안전한 AI의 미래를 만들어가요! 🚀`
+              });
+            }
+            
+  monthly-recognition:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Generate monthly recognition
+        uses: actions/github-script@v7
+        with:
+          script: |
+            // This will run monthly to highlight top contributors
+            console.log('Generating monthly contributor recognition...');
+            
+            // Create issue for monthly recognition
+            const now = new Date();
+            const monthYear = now.toLocaleDateString('ko-KR', { year: 'numeric', month: 'long' });
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `🏆 ${monthYear} 기여자 감사 인사`,
+              body: `# ${monthYear} 기여자 여러분께 감사드립니다! 🙏\n\n` +
+                    `이번 달 우리 프로젝트에 기여해주신 모든 분들께 진심으로 감사드립니다.\n\n` +
+                    `## 📊 이번 달 성과\n` +
+                    `- 승인된 PR: [자동 생성]\n` +
+                    `- 해결된 이슈: [자동 생성]\n` +  
+                    `- 새로운 기여자: [자동 생성]\n\n` +
+                    `## 🌟 특별 감사\n` +
+                    `[수동으로 작성 예정]\n\n` +
+                    `여러분의 노력 덕분에 AI 안전성 연구가 한 걸음 더 발전했습니다!\n\n` +
+                    `다음 달에도 함께 해주세요 🚀`,
+              labels: ['monthly-recognition', 'community']
+            });

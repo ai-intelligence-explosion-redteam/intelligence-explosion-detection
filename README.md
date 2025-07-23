@@ -259,11 +259,59 @@ This project is designed to support global AI safety efforts:
 - Integration with existing AI safety research networks
 - Support for multiple regulatory requirements
 
-## 📞 Contact & Support
+## 🤝 Community & Contributing
 
-- **Security Issues**: Use responsible disclosure protocols
-- **General Questions**: Open GitHub issues
-- **Collaboration**: Contact maintainers for partnership opportunities
+We welcome contributions from researchers, developers, and AI safety advocates worldwide!
+
+### 🌟 How to Contribute
+
+- **🔬 Research**: Share new detection methods, benchmark datasets, or safety frameworks
+- **💻 Code**: Improve algorithms, add features, or enhance performance
+- **📚 Documentation**: Write tutorials, translate content, or improve API docs
+- **🛡️ Security**: Report vulnerabilities through responsible disclosure
+- **🎓 Mentoring**: Help newcomers learn AI safety research
+
+### 🏆 Recognition System
+
+- 🥇 **Gold Contributor**: 10+ approved PRs
+- 🥈 **Silver Contributor**: 5+ approved PRs  
+- 🥉 **Bronze Contributor**: 1+ approved PR
+- 🔬 **Research Contributor**: Academic papers, datasets
+- 🛡️ **Security Researcher**: Vulnerability discoveries
+
+See our [Contributors Hall of Fame](CONTRIBUTORS.md) and [Contributing Guide](CONTRIBUTING.md).
+
+### 💬 Community Channels
+
+- **[GitHub Discussions](../../discussions)**: Q&A, feature requests, research talks
+- **[Issues](../../issues)**: Bug reports, feature requests, research proposals
+- **Monthly Meetups**: Online community calls (coming soon)
+- **Research Webinars**: Quarterly safety research presentations
+
+**🌍 Language Support**: Available in English (default), Korean, Japanese, and Chinese. See [Internationalization Guide](docs/INTERNATIONALIZATION.md).
+
+### 🎯 Current Priorities
+
+We're especially looking for contributions in:
+
+1. **� High Priority**
+   - PyRIT framework integration
+   - Multi-language support (English, Japanese)
+   - Real-time API connections (HuggingFace, OpenAI)
+   - Mobile-friendly dashboard
+
+2. **🌟 Research Areas**
+   - Multi-modal detection (text + image + audio)
+   - Federated learning monitoring
+   - Quantum AI safety preparation
+   - Brain-computer interface monitoring
+
+## �📞 Contact & Support
+
+- **Security Issues**: Use [responsible disclosure protocols](SECURITY.md)
+- **General Questions**: Open [GitHub issues](../../issues) or start a [discussion](../../discussions)
+- **Research Collaboration**: Join our [research discussions](../../discussions/categories/research)
+- **Mentorship**: Check our [mentorship program](../../issues?q=is%3Aissue+is%3Aopen+label%3Amentorship)
 
 ## 📄 License
 

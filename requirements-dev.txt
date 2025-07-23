@@ -1,0 +1,50 @@
+# Development dependencies for contributors
+# Install with: pip install -r requirements-dev.txt
+
+# Code formatting and linting
+black==23.12.1
+flake8==6.1.0
+isort==5.13.2
+mypy==1.8.0
+
+# Testing
+pytest==7.4.3
+pytest-cov==4.1.0
+pytest-mock==3.12.0
+pytest-asyncio==0.23.2
+coverage==7.3.4
+
+# Security scanning
+bandit==1.7.5
+safety==2.3.5
+
+# Documentation
+sphinx==7.2.6
+sphinx-rtd-theme==2.0.0
+myst-parser==2.0.0
+
+# Pre-commit hooks
+pre-commit==3.6.0
+
+# Performance profiling
+py-spy==0.3.14
+memory-profiler==0.61.0
+
+# API development
+httpx==0.25.2
+fastapi==0.104.1
+uvicorn==0.24.0
+
+# Jupyter notebook support
+jupyter==1.0.0
+ipykernel==6.27.1
+nbconvert==7.12.0
+
+# Database and storage (for advanced features)
+sqlalchemy==2.0.23
+redis==5.0.1
+
+# Advanced ML dependencies
+transformers==4.36.2
+torch==2.1.2
+scikit-learn==1.3.2
